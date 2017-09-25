@@ -10,4 +10,4 @@ See documents on [GoDoc](https://godoc.org/github.com/hiro4bbh/confeito) for det
 This package is based on QuickScorer __[Lucchese+ 2015]__.
 
 # References
-- __[Luccese+ 2015]__ C. Lucchese, F. M. Nardini, S. Orlando, R. Perego, N. Tonellotto, and R. Venturini. "QuickScorer: A Fast Algorithm to Rank Documents with Additive Ensembles of Regression Trees." _Proceedings of the 38th International ACM SIGIR Conference on Research and Development in Information Retrieval_. ACM, 2015..
+- __[Luccese+ 2015]__ C. Lucchese, F. M. Nardini, S. Orlando, R. Perego, N. Tonellotto, and R. Venturini. "QuickScorer: A Fast Algorithm to Rank Documents with Additive Ensembles of Regression Trees." _Proceedings of the 38th International ACM SIGIR Conference on Research and Development in Information Retrieval_. ACM, 2015.
