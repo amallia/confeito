@@ -165,7 +165,7 @@ func (forest *Forest) Predict(x Feature) ([]interface{}, error) {
 		}
 		left, right := 0, len(feature.thresholds)
 		for left < right {
-			middle := (left + right)/2
+			middle := (left + right) / 2
 			if feature.thresholds[middle] < featureValue {
 				left = middle + 1
 			} else {

@@ -42,7 +42,7 @@ func (assert *Assert) EqualWithoutError(actual_err ...interface{}) {
 	}
 	err := actual_err[len(actual_err)-1]
 	if err != nil {
-		assert.tb.Errorf("unexpected error: %s", err)
+		assert.tb.Fatalf("unexpected error: %s", err)
 	}
 	assert.Equal(actual_err[0 : len(actual_err)-1]...)
 }
