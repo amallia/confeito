@@ -11,4 +11,4 @@ This package is based on QuickScorer __[Lucchese+ 2015]__.
 We confirmed that the QuickScorer-based implementation is >4x faster than the naive implementation on 65536 depth-12 trees with 65536D sparse feature.
 
 # References
-- __[Luccese+ 2015]__ C. Lucchese, F. M. Nardini, S. Orlando, R. Perego, N. Tonellotto, and R. Venturini. "QuickScorer: A Fast Algorithm to Rank Documents with Additive Ensembles of Regression Trees." _Proceedings of the 38th International ACM SIGIR Conference on Research and Development in Information Retrieval_. ACM, 2015.
+- __[Lucchese+ 2015]__ C. Lucchese, F. M. Nardini, S. Orlando, R. Perego, N. Tonellotto, and R. Venturini. "QuickScorer: A Fast Algorithm to Rank Documents with Additive Ensembles of Regression Trees." _Proceedings of the 38th International ACM SIGIR Conference on Research and Development in Information Retrieval_. ACM, 2015.
