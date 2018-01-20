@@ -12,5 +12,5 @@
     <polygon stroke-linejoin="round" points="200,110 162,80 155,32 110,50 65,32 58,80 20,110 58,140 65,188 110,170 155,188 162,140" fill="#EF5FA7" stroke="#EF5FA7" stroke-width="20" />
     <rect x="20" y="20" width="180" height="180" fill="url(#stripe)" />
   </g>
-  <g font-family="Apple Chancery" font-size="72"><text x="260" y="136" fill="#EF5FA7"><tspan font-weight="100">confeito</tspan></text></g>
+  <g font-family="Zapfino" font-size="48"><text x="260" y="120" fill="#EF5FA7"><tspan font-weight="100">confeito</tspan></text></g>
 </svg>
