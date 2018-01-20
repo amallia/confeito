@@ -8,7 +8,7 @@ import (
 )
 
 func TestTerminalLeaf(t *testing.T) {
-	x := DenseFeature{-2.0, -1.0, 0.0, 1.0, 2.0}
+	x := DenseFeatureVector{-2.0, -1.0, 0.0, 1.0, 2.0}
 
 	terminal1 := goassert.New(t).SucceedNew(NewTerminalLeaf(float32(1.0))).(*Leaf)
 	goassert.New(t, (*Leaf)(nil)).Equal(terminal1.GetLeft())
@@ -23,12 +23,12 @@ func TestTerminalLeaf(t *testing.T) {
 }
 
 func TestLeaf(t *testing.T) {
-	x1 := DenseFeature{-2.0, -1.0, 0.0, 1.0, 2.0}
-	x2 := DenseFeature{-2.0, -1.0, 1.0, 1.0, 2.0}
-	x3 := DenseFeature{-2.0, 1.0, 0.0, 1.0, 2.0}
-	x4 := DenseFeature{-2.0, 1.0, 0.0, 2.0, 2.0}
-	x5 := DenseFeature{-2.0, 1.0, 0.0, 2.0, 3.0}
-	x6 := DenseFeature{-2.0, 1.0, 0.0, 2.0}
+	x1 := DenseFeatureVector{-2.0, -1.0, 0.0, 1.0, 2.0}
+	x2 := DenseFeatureVector{-2.0, -1.0, 1.0, 1.0, 2.0}
+	x3 := DenseFeatureVector{-2.0, 1.0, 0.0, 1.0, 2.0}
+	x4 := DenseFeatureVector{-2.0, 1.0, 0.0, 2.0, 2.0}
+	x5 := DenseFeatureVector{-2.0, 1.0, 0.0, 2.0, 3.0}
+	x6 := DenseFeatureVector{-2.0, 1.0, 0.0, 2.0}
 
 	goassert.New(t, "featureID must be valid").ExpectError(NewLeaf(_FEATURE_ID_ILLEGAL, 0.0, nil, nil))
 
@@ -61,5 +61,5 @@ func TestLeaf(t *testing.T) {
 	goassert.New(t, float32(3.0)).EqualWithoutError(leaf1.Predict(x3))
 	goassert.New(t, float32(4.0)).EqualWithoutError(leaf1.Predict(x4))
 	goassert.New(t, float32(5.0)).EqualWithoutError(leaf1.Predict(x5))
-	goassert.New(t, "id 4 is out of range").ExpectError(leaf1.Predict(x6))
+	goassert.New(t, float32(4.0)).EqualWithoutError(leaf1.Predict(x6))
 }

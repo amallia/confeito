@@ -91,14 +91,12 @@ func (l *Leaf) IsTerminal() bool {
 
 // Predict returns the predicted value of the given feature.
 //
-// This function returns an errors at getting features of x.
-func (l *Leaf) Predict(x Feature) (value interface{}, err error) {
+// This function returns an errors at getting feature values of x.
+func (l *Leaf) Predict(x FeatureVector) (value interface{}, err error) {
 	if l.IsTerminal() {
 		return l.value, nil
 	}
-	if fvalue, err := x.Get(l.featureID); err != nil {
-		return nil, err
-	} else if fvalue <= l.threshold {
+	if fvalue, _ := x.Get(l.featureID); fvalue <= l.threshold {
 		return l.left.Predict(x)
 	} else {
 		return l.right.Predict(x)

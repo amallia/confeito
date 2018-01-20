@@ -152,17 +152,14 @@ func (forest *Forest) Enqueue(trees ...*Leaf) error {
 
 // Predict returns a slice of the value predicted by each tree of forest.
 //
-// This function returns an error at getting features of x.
-func (forest *Forest) Predict(x Feature) ([]interface{}, error) {
+// This function returns an error at getting feature values of x.
+func (forest *Forest) Predict(x FeatureVector) ([]interface{}, error) {
 	bvs := make([]uint64, len(forest.trees))
 	for t := 0; t < len(bvs); t++ {
 		bvs[t] = (1 << uint64(len(forest.trees[t].values))) - 1
 	}
 	for i, feature := range forest.features {
-		featureValue, err := x.Get(FeatureID(i))
-		if err != nil {
-			return nil, err
-		}
+		featureValue, _ := x.Get(FeatureID(i))
 		left, right := 0, len(feature.thresholds)
 		for left < right {
 			middle := (left + right) / 2

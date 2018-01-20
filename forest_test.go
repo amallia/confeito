@@ -7,7 +7,7 @@ import (
 )
 
 func TestForestEnqueueOnly(t *testing.T) {
-	x := DenseFeature{-2.0, -1.0, 0.0, 1.0, 2.0, 3.0}
+	x := DenseFeatureVector{-2.0, -1.0, 0.0, 1.0, 2.0, 3.0}
 
 	// Each tree should be unbalanced for testing
 	tree1 := goassert.New(t).SucceedNew(NewLeaf(0, -2.5, float32(0.0), float32(1.0))).(*Leaf)
@@ -30,7 +30,7 @@ func TestForestEnqueueOnly(t *testing.T) {
 }
 
 func TestForestEnqueueDequeue(t *testing.T) {
-	x := DenseFeature{-2.0, -1.0, 0.0, 1.0, 2.0, 3.0}
+	x := DenseFeatureVector{-2.0, -1.0, 0.0, 1.0, 2.0, 3.0}
 
 	// Each tree should be unbalanced for testing
 	tree1 := goassert.New(t).SucceedNew(NewLeaf(0, -2.5, float32(0.0), float32(1.0))).(*Leaf)
@@ -80,19 +80,11 @@ func TestForestEnqueueTooDeepTree(t *testing.T) {
 	goassert.New(t, "the number of leaves in the tree must not be greater than 64").ExpectError(forest.Enqueue(treeRight))
 }
 
-func TestForestGetIllegalFeature(t *testing.T) {
-	x := DenseFeature{-2.0, -1.0, 0.0, 1.0, 2.0}
-	tree := goassert.New(t).SucceedNew(NewLeaf(5, 0.0, float32(0.0), float32(0.0))).(*Leaf)
-	forest := NewForest()
-	goassert.New(t).SucceedWithoutError(forest.Enqueue(tree))
-	goassert.New(t, "id 5 is out of range \\[0:5\\]").ExpectError(forest.Predict(x))
-}
-
 func BenchmarkBasicEnsembleTrees(b *testing.B) {
 	dim, ntrees, depth := 65536, 65536, 12
-	x := NewSparseFeature(dim)
+	x := make(DenseFeatureVector, dim)
 	for i := 0; i < dim; i++ {
-		x.Set(FeatureID(i), float32(i))
+		x[i] = float32(i)
 	}
 	root := goassert.New(b).SucceedNew(NewLeaf(0, -1.0, float32(0.0), float32(1.0))).(*Leaf)
 	leaf := root
@@ -112,9 +104,9 @@ func BenchmarkBasicEnsembleTrees(b *testing.B) {
 
 func BenchmarkForest(b *testing.B) {
 	dim, ntrees, depth := 65536, 65536, 12
-	x := NewSparseFeature(dim)
+	x := make(DenseFeatureVector, dim)
 	for i := 0; i < dim; i++ {
-		x.Set(FeatureID(i), float32(i))
+		x[i] = float32(i)
 	}
 	root := goassert.New(b).SucceedNew(NewLeaf(0, -1.0, float32(0.0), float32(1.0))).(*Leaf)
 	leaf := root
