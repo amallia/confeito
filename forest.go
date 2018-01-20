@@ -81,13 +81,13 @@ func (forest *Forest) Dequeue() {
 
 func (forest *Forest) registerLeaf(leaf *Leaf, treeID int) (nleft, nright int, err error) {
 	if leaf.IsTerminal() {
-		value, _ := leaf.GetValue()
+		value, _ := leaf.Value()
 		tree := forest.trees[treeID]
 		tree.values = append(tree.values, value)
 		nleft = 1
 		return
 	}
-	if rightLeaf := leaf.GetRight(); rightLeaf != nil {
+	if rightLeaf := leaf.Right(); rightLeaf != nil {
 		nleft_, nright_, err_ := forest.registerLeaf(rightLeaf, treeID)
 		if err_ != nil {
 			err = err_
@@ -95,7 +95,7 @@ func (forest *Forest) registerLeaf(leaf *Leaf, treeID int) (nleft, nright int, e
 		}
 		nright += nleft_ + nright_
 	}
-	if leftLeaf := leaf.GetLeft(); leftLeaf != nil {
+	if leftLeaf := leaf.Left(); leftLeaf != nil {
 		nleft_, nright_, err_ := forest.registerLeaf(leftLeaf, treeID)
 		if err_ != nil {
 			err = err_
@@ -108,7 +108,7 @@ func (forest *Forest) registerLeaf(leaf *Leaf, treeID int) (nleft, nright int, e
 		err = fmt.Errorf("the number of leaves in the tree must not be greater than 64")
 		return
 	}
-	featureID, threshold, _ := leaf.GetThreshold()
+	featureID, threshold, _ := leaf.Threshold()
 	feature, ok := forest.features[featureID]
 	if !ok {
 		feature = &forestFeature{

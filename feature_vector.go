@@ -12,8 +12,6 @@ const _FEATURE_ID_ILLEGAL = ^FeatureID(0)
 
 // FeatureVector is the interface for a data point.
 // FeatureVector interface can be used by any storage manager, so it should provide only read properties.
-//
-// TODO: Consider the way to handle non-float32 features.
 type FeatureVector interface {
 	// Dim returns the vector dimension.
 	Dim() int

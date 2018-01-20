@@ -13,8 +13,6 @@ const _FEATURE_ID_TERMINAL_LEAF = _FEATURE_ID_ILLEGAL
 // This process is repeated until the cursor points a terminal leaf, and returns the value of it.
 //
 // Leaf is slow, because it is designed to use manipulating tree structure in training-phase or testing its correctness.
-//
-// TODO: Consider the way to handle non-float32 features.
 type Leaf struct {
 	featureID   FeatureID
 	threshold   float32
@@ -22,7 +20,7 @@ type Leaf struct {
 	left, right *Leaf
 }
 
-// NewLeaf returns a new leaf with feature ID and threshold.
+// NewLeaf returns a new non-terminal leaf with feature ID and threshold.
 // Also, the function sets the default value of the left and right leaf.
 //
 // This function returns an error if featureID is FEATURE_ID_TERMINAL_LEAF.
@@ -50,43 +48,15 @@ func NewTerminalLeaf(value interface{}) (*Leaf, error) {
 	}, nil
 }
 
-// GetLeft returns the left leaf.
-// If l is terminal, then the function returns nil.
-func (l *Leaf) GetLeft() *Leaf {
-	return l.left
-}
-
-// GetRight returns the right leaf.
-// If l is terminal, then the function returns nil.
-func (l *Leaf) GetRight() *Leaf {
-	return l.right
-}
-
-// GetThreshold returns the threshold with feature ID of l.
-//
-// This function returns an error if l is terminal.
-func (l *Leaf) GetThreshold() (featureID FeatureID, threshold float32, err error) {
-	if l.IsTerminal() {
-		err = fmt.Errorf("terminal leaf does not have threshold")
-		return
-	}
-	return l.featureID, l.threshold, nil
-}
-
-// GetValue returns the value of l.
-//
-// This function returns an error if l is not terminal.
-func (l *Leaf) GetValue() (value interface{}, err error) {
-	if !l.IsTerminal() {
-		err = fmt.Errorf("non-terminal leaf does not have value")
-		return
-	}
-	return l.value, nil
-}
-
 // IsTerminal returns true if l is terminal, otherwise false.
 func (l *Leaf) IsTerminal() bool {
 	return l.featureID == _FEATURE_ID_TERMINAL_LEAF
+}
+
+// Left returns the left leaf.
+// If l is terminal, then this returns nil.
+func (l *Leaf) Left() *Leaf {
+	return l.left
 }
 
 // Predict returns the predicted value of the given feature.
@@ -103,7 +73,13 @@ func (l *Leaf) Predict(x FeatureVector) (value interface{}, err error) {
 	}
 }
 
-// SetLeft sets left leaf.
+// Right returns the right leaf.
+// If l is terminal, then this returns nil.
+func (l *Leaf) Right() *Leaf {
+	return l.right
+}
+
+// SetLeft sets the left leaf.
 //
 // This function returns an error if l is terminal, or the new leaf is nil.
 func (l *Leaf) SetLeft(left *Leaf) error {
@@ -117,7 +93,7 @@ func (l *Leaf) SetLeft(left *Leaf) error {
 	return nil
 }
 
-// SetRight sets right leaf.
+// SetRight sets the right leaf.
 //
 // This function returns an error if l is terminal, or the new leaf is nil.
 func (l *Leaf) SetRight(right *Leaf) error {
@@ -137,4 +113,26 @@ func (l *Leaf) String() string {
 		return fmt.Sprintf("%g", l.value)
 	}
 	return fmt.Sprintf("(feature[%d] <= %g ? %s : %s)", l.featureID, l.threshold, l.left, l.right)
+}
+
+// Threshold returns the threshold with feature ID of l.
+//
+// This function returns an error if l is terminal.
+func (l *Leaf) Threshold() (featureID FeatureID, threshold float32, err error) {
+	if l.IsTerminal() {
+		err = fmt.Errorf("terminal leaf does not have threshold")
+		return
+	}
+	return l.featureID, l.threshold, nil
+}
+
+// Value returns the value of the terminal leaf l.
+//
+// This function returns an error if l is not terminal.
+func (l *Leaf) Value() (value interface{}, err error) {
+	if !l.IsTerminal() {
+		err = fmt.Errorf("non-terminal leaf does not have value")
+		return
+	}
+	return l.value, nil
 }
