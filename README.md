@@ -1,4 +1,6 @@
 # Package confeito provides fast ensemble tree inference
+![confeito logo](https://rawgit.com/hiro4bbh/confeito/master/logo.svg)
+
 [![Build Status](https://travis-ci.org/hiro4bbh/confeito.svg?branch=master)](https://travis-ci.org/hiro4bbh/confeito)
 
 Copyright 2017- Tatsuhiro Aoshima (hiro4bbh@gmail.com).
