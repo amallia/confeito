@@ -88,20 +88,20 @@ func (forest *Forest) registerLeaf(leaf *Leaf, treeID int) (nleft, nright int, e
 		return
 	}
 	if rightLeaf := leaf.Right(); rightLeaf != nil {
-		nleft_, nright_, err_ := forest.registerLeaf(rightLeaf, treeID)
-		if err_ != nil {
-			err = err_
+		nleftAtRight, nrightAtRight, e := forest.registerLeaf(rightLeaf, treeID)
+		if e != nil {
+			err = e
 			return
 		}
-		nright += nleft_ + nright_
+		nright += nleftAtRight + nrightAtRight
 	}
 	if leftLeaf := leaf.Left(); leftLeaf != nil {
-		nleft_, nright_, err_ := forest.registerLeaf(leftLeaf, treeID)
-		if err_ != nil {
-			err = err_
+		nleftAtLeft, nrightAtLeft, e := forest.registerLeaf(leftLeaf, treeID)
+		if e != nil {
+			err = e
 			return
 		}
-		nleft += nleft_ + nright_
+		nleft += nleftAtLeft + nrightAtLeft
 	}
 	nleaves := nleft + nright
 	if nleaves > 64 {

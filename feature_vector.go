@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// Type of feature IDs is uint32.
+// FeatureID is the type of feature IDs is uint32.
 type FeatureID uint32
 
 // Feature ID for an illegal value.
@@ -27,10 +27,12 @@ type FeatureVector interface {
 // This implements interface FeatureVector.
 type DenseFeatureVector []float32
 
+// Dim is for interface FeatureVector.
 func (v DenseFeatureVector) Dim() int {
 	return len(v)
 }
 
+// Get is for interface FeatureVector.
 func (v DenseFeatureVector) Get(id FeatureID) (value float32, err error) {
 	if id == _FEATURE_ID_ILLEGAL {
 		err = fmt.Errorf("id must be legal one")
@@ -47,12 +49,13 @@ type KeyValue struct {
 	Value float32
 }
 
-// SparseFeature is a type for a data point having sparse feature values.
+// SparseFeatureVector is a type for a data point having sparse feature values.
 // The features should be sorted in ascending order of its key.
 //
 // This implements interface FeatureVector and sort.Sort.
 type SparseFeatureVector []KeyValue
 
+// Dim is for interface FeatureVector.
 func (v SparseFeatureVector) Dim() (d int) {
 	for _, vpair := range v {
 		if d < int(vpair.Key) {
@@ -62,6 +65,7 @@ func (v SparseFeatureVector) Dim() (d int) {
 	return
 }
 
+// Get is for interface FeatureVector.
 func (v SparseFeatureVector) Get(id FeatureID) (value float32, err error) {
 	if id == _FEATURE_ID_ILLEGAL {
 		err = fmt.Errorf("id must be legal one")

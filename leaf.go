@@ -66,11 +66,10 @@ func (l *Leaf) Predict(x FeatureVector) (value interface{}, err error) {
 	if l.IsTerminal() {
 		return l.value, nil
 	}
-	if fvalue, _ := x.Get(l.featureID); fvalue <= l.threshold {
-		return l.left.Predict(x)
-	} else {
+	if fvalue, _ := x.Get(l.featureID); fvalue > l.threshold {
 		return l.right.Predict(x)
 	}
+	return l.left.Predict(x)
 }
 
 // Right returns the right leaf.
